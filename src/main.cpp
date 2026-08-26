@@ -1,5 +1,7 @@
 #include <Arduino.h>
-#include "ScreenManager.h"[cite: 3, 5]
+#include <TFT_eSPI.h>
+
+TFT_eSPI tft = TFT_eSPI();
 
 void setup() {
     Serial.begin(115200);

@@ -1,7 +1,7 @@
 #include "ScreenManager.h"
 
 // Hardware driver and full-frame offscreen buffer (Sprite)
-TFT_eSPI tft = TFT_eSPI();
+// TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite canvas = TFT_eSprite(&tft);
 
 void initDisplay() {
