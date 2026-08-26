@@ -1,66 +1,28 @@
-// main.cpp
 #include <Arduino.h>
-#include "SDManager.h"
-#include "CamManager.h" // Include your new camera manager
-
-#include "InputManager.h"
-
-#define BUTTON_PIN 3
-
-// Instantiate your storage and camera objects
-SDManager sdManager(39, 38, 40);
-CamManager camManager; 
-
-// Variables for file naming and button debouncing
-int pictureCount = 0;
-int lastButtonState = HIGH;
-unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;
+#include "ScreenManager.h"[cite: 3, 5]
 
 void setup() {
     Serial.begin(115200);
-    pinMode(BUTTON_PIN, INPUT);
-    
-    // Start SD card and USB MSC
-    if (sdManager.begin()) {
-        Serial.println("SD Manager initialized successfully.");
-    }
+    delay(2000); // Allow USB CDC Serial terminal to attach
+    Serial.println("--- Starting Direct TFT Hardware Test ---");
 
-    // Initialize Camera using the newly refactored class
-    camManager.initialize();
+    tft.init();
+    tft.setRotation(1);
+    tft.fillScreen(TFT_BLACK);
     
-    Serial.println("Ready. Press the button to take a photo!");
+    Serial.println("TFT Initialized successfully!");
 }
 
 void loop() {
-    int reading = digitalRead(BUTTON_PIN);
+    Serial.println("Displaying RED...");
+    tft.fillScreen(TFT_RED);
+    delay(1000);
 
-    if (reading != lastButtonState) {
-        lastDebounceTime = millis();
-    }
+    Serial.println("Displaying GREEN...");
+    tft.fillScreen(TFT_GREEN);
+    delay(1000);
 
-    if ((millis() - lastDebounceTime) > debounceDelay) {
-        if (reading == LOW) {
-            
-            if (sdManager.isMounted()) {
-                char filename[32];
-                snprintf(filename, sizeof(filename), "/image_%d.jpg", pictureCount);
-                
-                Serial.printf("Button pressed! Capturing %s...\n", filename);
-                
-                // Call the refactored capture function
-                camManager.takeAndSavePhoto(filename);
-                
-                pictureCount++; 
-            } else {
-                Serial.println("Cannot save photo: SD Manager is not mounted.");
-            }
-            
-            while (digitalRead(BUTTON_PIN) == LOW) {
-                delay(10);
-            }
-        }
-    }
-    
-    lastButtonState = reading;
+    Serial.println("Displaying BLUE...");
+    tft.fillScreen(TFT_BLUE);
+    delay(1000);
 }
