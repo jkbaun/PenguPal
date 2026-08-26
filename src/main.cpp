@@ -3,6 +3,8 @@
 #include "SDManager.h"
 #include "CamManager.h" // Include your new camera manager
 
+#include "InputManager.h"
+
 #define BUTTON_PIN 3
 
 // Instantiate your storage and camera objects
