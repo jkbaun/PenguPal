@@ -1,7 +1,7 @@
 #include "ScreenManager.h"
 
 // Hardware driver and full-frame offscreen buffer (Sprite)
-// TFT_eSPI tft = TFT_eSPI();
+TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite canvas = TFT_eSprite(&tft);
 
 void initDisplay() {
@@ -27,7 +27,7 @@ void initDisplay() {
 
 // void drawCursor(int x) {
 //     drawIcon(x, 260, 45, 55, asset_sprite_cursor, 0x0000);
-// }
+// }   
 
 void refreshScreen() {
     // Push completed buffer to display via fast SPI
